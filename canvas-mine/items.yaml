@@ -1,0 +1,72 @@
+- name: 证件
+  children:
+    - name: 身份证
+    - name: 驾驶证 C1
+      price: 3700
+- name: 车辆
+  children:
+    - name: 迪卡侬 RC120
+      price: 1250
+- name: Apple
+  children:
+    - name: iPhone 15 Pro 256
+      price: 8999
+    - name: AirPods Pro 2
+      price: 1899
+    - name: Macbook Air M2
+      price: 6199
+
+- name: 小米-小
+  children:
+    - name: 小米蓝牙温湿度计2 * 4
+      price: 108
+    - name: 小米电动牙刷
+      price: 169
+    - name: 小米除球机
+      price: 59
+    - name: 小米电动螺丝刀
+      price: 79
+    - name: 小米充电头C+a口67w
+      price: 49
+    - name: 小米充电头C口20w
+      price: 29
+- name: 小米-大
+  children:
+    - name: 小米小饭煲
+      price: 189
+    - name: 小米电水壶
+      price: 159
+    - name: 小米体脂秤
+      price: 199
+- name: 工具
+  children:
+    - name: 螺丝刀
+    - name: 内六角扳手
+    - name: 梅花内六角扳手
+    - name: 螺丝刀套装
+- name: 数码
+  children:
+    - name: XBox 手柄
+      price: 428.5
+    - name: 罗技鼠标 G502 W
+      price: 499
+    - name: 西数硬盘 4T
+      price: 500
+    - name: 希捷硬盘 4T
+      price: 500
+    - name: 宏碁硬盘 2T
+      price: 650
+    - name: 固态U盘（ITGZ+PM991） 256G
+      price: 149
+- name: 生活
+  children:
+    - name: 垃圾桶
+    - name: 扫把
+    - name: 普通水果刀
+    - name: 张小泉菜刀
+    - name: 磨石
+    - name: 筷子两双
+    - name: 饭铲
+- name: 其它
+  children:
+    - name: 电脑支架
