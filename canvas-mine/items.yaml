@@ -5,68 +5,154 @@
       price: 3700
 - name: 车辆
   children:
-    - name: 迪卡侬 RC120
-      price: 1250
+    - name: 迪卡侬公路车 RC120
+      price: 1300
 - name: Apple
   children:
-    - name: iPhone 15 Pro 256
-      price: 8999
+    - name: iPhone 15 Pro 256 (care+ 1y)
+      price: 9998
+    - name: Macbook Air M2 16+256
+      price: 6099
     - name: AirPods Pro 2
       price: 1899
-    - name: Macbook Air M2
-      price: 6199
-
-- name: 小米-小
+    - name: Apple Watch S7
+      price: 999
+- name: 小米-数码
+  children:
+    - name: 小米10 8+256
+      price: 800
+    - name: 小米电动螺丝刀
+      price: 169
+    - name: 小米GaN充电器67W(C+A)
+      price: 99
+    - name: 小米魔方转换器Pro 33W
+      price: 89
+    - name: 小米充电头C口20w
+      price: 29
+    - name: 米家显示器挂灯
+      price: 189
+    - name: 酷态科10号充电器
+      price: 148
+    - name: 酷态科15号Ultra
+      price: 320
+- name: 小米-米家
   children:
     - name: 小米蓝牙温湿度计2 * 4
       price: 108
-    - name: 小米电动牙刷
+    - name: 米家智能插座3 * 3
+      price: 168
+    - name: 小米智能多模网关2
+      price: 229
+    - name: 小米电动牙刷 T302
       price: 169
     - name: 小米除球机
-      price: 59
-    - name: 小米电动螺丝刀
-      price: 79
-    - name: 小米充电头C+a口67w
-      price: 49
-    - name: 小米充电头C口20w
-      price: 29
-- name: 小米-大
-  children:
+      price: 45
+    - name: 米家空调伴侣2
+      price: 69
     - name: 小米小饭煲
-      price: 189
+      price: 179
     - name: 小米电水壶
       price: 159
     - name: 小米体脂秤
       price: 199
+- name: 电脑配件-在用
+  children:
+    - name: 处理器：5600X
+      price: 1250
+    - name: 主板：B450M迫击炮
+      price: 220
+    - name: 散热器：利民TS120mini
+      price: 238
+    - name: 内存：光威8G*2
+      price: 299
+    - name: 内存：光威16G*2
+      price: 400
+    - name: 显卡：华硕4070S巨齿鲨
+      price: 5499
+    - name: 系统盘：凯侠固态硬盘RC20 500G
+      price: 399
+    - name: 游戏盘：宏碁固态硬盘GM7 2T
+      price: 650
+    - name: 仓库盘：西数机械硬盘 4T
+      price: 500
+    - name: 备份盘：希捷机械硬盘 4T
+      price: 500
+    - name: 电源：TT钢影650W
+      price: 663
+    - name: 机箱：华硕AP201冰立方
+      price: 398
+    - name: 网卡：AX210
+      price: 180
+    - name: 机箱风扇 * 4
+      price: 180
+- name: 电脑配件-闲置
+  children:
+    - name: 显卡：GTX1080 公版涡轮
+      price: 1300
+    - name: 机箱：乔思伯V9
+      price: 218
+    - name: 机箱风扇 * 5
+      price: 170
+- name: 电脑外设
+  children:
+    - name: SANC G52 24寸2K180Hz
+      price: 796
+    - name: JBL GO 4
+      price: 359
+    - name: XBox 手柄
+      price: 429
+    - name: 罗技耳机G431
+      price: 279
+    - name: 罗技鼠标G502有线
+      price: 217
+    - name: 罗技鼠标G502无线
+      price: 479
+    - name: 键盘RK987
+      price: 219
+    - name: 雷电4数据线1m
+      price: 53
+    - name: TF卡 16G
+    - name: 联想拓展坞
+      price: 140
+    - name: 凯侠U盘 64G
+      price: 56
+    - name: 固态U盘(ITGZ+PM991 256G)
+      price: 149
+- name: 网络设备
+  children:
+    - name: j1900 8G 双网口软路由
+      price: 260
+    - name: i5-4590 16G 下载机
+      price: 500
+    - name: TP-Link AX3000 路由器
+      price: 294
+    - name: TP-Link TL-SE2106 2.5G交换机
+      price: 349
 - name: 工具
   children:
-    - name: 螺丝刀
+    - name: 喜德胜打气筒
+      price: 55
     - name: 内六角扳手
-    - name: 梅花内六角扳手
+      price: 15
     - name: 螺丝刀套装
-- name: 数码
-  children:
-    - name: XBox 手柄
-      price: 428.5
-    - name: 罗技鼠标 G502 W
-      price: 499
-    - name: 西数硬盘 4T
-      price: 500
-    - name: 希捷硬盘 4T
-      price: 500
-    - name: 宏碁硬盘 2T
-      price: 650
-    - name: 固态U盘（ITGZ+PM991） 256G
-      price: 149
+      price: 20
+    - name: 锤子
+    - name: 胶带封口机
+    - name: 真空包装机
 - name: 生活
   children:
-    - name: 垃圾桶
-    - name: 扫把
-    - name: 普通水果刀
-    - name: 张小泉菜刀
-    - name: 磨石
-    - name: 筷子两双
-    - name: 饭铲
+    - name: 雨伞*2
+    - name: 垃圾桶*2
+    - name: 扫把*1
+    - name: 普通水果刀*2
+    - name: 十八子作菜刀套装
+    - name: 普通磨石*1
+    - name: 筷子若干
+    - name: 碗若干
+    - name: 锅和铲
 - name: 其它
   children:
-    - name: 电脑支架
+    - name: 斯凯特手电 EC200S-mini
+      price: 327
+    - name: 钛合金折叠小刀
+      price: 40
