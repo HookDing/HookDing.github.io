@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二维码/条形码扫描</title>
+    <script src="https://unpkg.com/@zxing/browser@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #111;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        /* 预览区域 */
+        #scanner-container {
+            position: relative;
+            width: 90vw;
+            max-width: 400px;
+            height: 300px;
+            background-color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #444;
+        }
+
+        /* 预览视频 */
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 扫描结果 */
+        #result {
+            margin-top: 15px;
+            font-size: 18px;
+            background-color: rgba(0, 255, 0, 0.8);
+            color: black;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        /* 按钮样式 */
+        .btn-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .btn-start {
+            background-color: #28a745;
+        }
+
+        .btn-stop {
+            background-color: #dc3545;
+        }
+
+        .btn-restart {
+            background-color: #007bff;
+        }
+
+        .btn:disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="scanner-container">
+        <video id="video" autoplay playsinline></video>
+    </div>
+    <div id="result"></div>
+    <div class="btn-group">
+        <button id="start-btn" class="btn btn-start" onclick="startCamera()">开始扫描</button>
+        <button id="stop-btn" class="btn btn-stop" onclick="stopCamera()" disabled>暂停扫描</button>
+        <button id="restart-btn" class="btn btn-restart" onclick="restartScan()" style="display: none;">重新扫码</button>
+    </div>
+
+    <script>
+        const video = document.getElementById("video");
+        const resultDiv = document.getElementById("result");
+        const startBtn = document.getElementById("start-btn");
+        const stopBtn = document.getElementById("stop-btn");
+        const restartBtn = document.getElementById("restart-btn");
+
+        let stream;
+        let codeReader;
+        let scanning = false;
+
+        // 启动摄像头
+        async function startCamera() {
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            restartBtn.style.display = "none";
+            resultDiv.style.display = "none";
+
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+                video.srcObject = stream;
+                video.play();
+
+                codeReader = new ZXingBrowser.BrowserMultiFormatReader();
+                scanning = true;
+                scanBarcode();
+            } catch (error) {
+                console.error("摄像头启动失败:", error);
+                resultDiv.innerText = "无法访问摄像头";
+                resultDiv.style.display = "block";
+            }
+        }
+
+        // 扫描二维码/条形码
+        function scanBarcode() {
+            if (!scanning || !codeReader) return;
+
+            codeReader.decodeFromVideoDevice(undefined, video, (result, err) => {
+                if (result) {
+                    resultDiv.innerText = `扫描成功: ${result.text}`;
+                    resultDiv.style.display = "block";
+
+                    //setTimeout(() => video.pause(), 0); // 让画面定格
+                    stopCamera(); // 立即关闭摄像头
+                }
+            });
+        }
+        // 用最后一帧截图填充 video
+        function captureLastFrame() {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            video.srcObject = null; // 断开摄像头
+            video.poster = canvas.toDataURL("image/png"); // 用最后一帧截图填充 video
+        }
+        // 关闭摄像头
+        function stopCamera() {
+            captureLastFrame();
+            scanning = false;
+            stopBtn.disabled = true;
+            restartBtn.style.display = "inline-block";
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop()); // 关闭所有视频流
+            }
+            // 停止 ZXing 解码
+            if (codeReader) {
+                codeReader.reset();
+            }
+        }
+
+        // 重新扫码
+        function restartScan() {
+            video.srcObject = null; // 清理视频流
+            startCamera();
+        }
+    </script>
+</body>
+
+</html>
