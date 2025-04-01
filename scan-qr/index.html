@@ -98,6 +98,12 @@
             resultDiv.innerText = `扫码结果: ${qrCode.data}`;
             stopCamera(); // 停止摄像头
             videoElement.style.display = 'none'; // 隐藏视频元素，避免黑屏
+            // 切换到其他界面或操作，避免继续显示摄像头窗口
+            // 假设这里我们跳转到一个成功页面或者刷新UI
+            setTimeout(() => {
+              alert('扫码成功！');
+              // 可以跳转到其他页面或更新界面
+            }, 500);
             return; // 一旦扫描成功，停止后续扫描
           }
         }
