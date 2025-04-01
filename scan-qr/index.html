@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>扫码功能</title>
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>扫码和手动对焦功能</title>
   <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
   <style>
     #videoElement {
@@ -14,19 +19,32 @@
     #canvas {
       display: none;
     }
+    .controls {
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h2>扫码功能</h2>
+  <h2>扫码与手动对焦功能</h2>
   <video id="videoElement" autoplay></video>
   <canvas id="canvas"></canvas>
   <div id="result"></div>
+  <div class="controls">
+    <label for="focusRange">手动对焦:</label>
+    <input type="range" id="focusRange" min="0" max="1" step="0.01" value="0.5">
+    <span id="focusValue">0.5</span>
+  </div>
 
   <script>
     const videoElement = document.getElementById('videoElement');
     const canvas = document.getElementById('canvas');
     const canvasContext = canvas.getContext('2d');
     const resultDiv = document.getElementById('result');
+    const focusRange = document.getElementById('focusRange');
+    const focusValueSpan = document.getElementById('focusValue');
+
+    let currentStream = null;
+    let videoTrack = null;
 
     // 获取摄像头权限并启动视频流
     async function startCamera() {
@@ -35,8 +53,26 @@
           video: { facingMode: "environment" }  // 使用后置摄像头
         });
         videoElement.srcObject = stream;
+
+        // 获取视频轨道并设置对焦
+        currentStream = stream;
+        videoTrack = stream.getVideoTracks()[0];
+        adjustFocus(focusRange.value);
+
       } catch (error) {
         console.error('获取摄像头失败:', error);
+      }
+    }
+
+    // 调整摄像头的对焦
+    function adjustFocus(value) {
+      if (videoTrack && videoTrack.getSettings().focusMode) {
+        // 如果摄像头支持手动对焦
+        const constraints = {
+          advanced: [{ focusMode: 'manual', focusDistance: value }]
+        };
+        videoTrack.applyConstraints(constraints);
+        focusValueSpan.textContent = value;
       }
     }
 
@@ -57,6 +93,11 @@
 
       requestAnimationFrame(scanQRCode);
     }
+
+    // 监听焦距变化
+    focusRange.addEventListener('input', (event) => {
+      adjustFocus(event.target.value);
+    });
 
     // 启动摄像头和扫描
     startCamera();
