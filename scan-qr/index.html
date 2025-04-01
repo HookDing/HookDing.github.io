@@ -27,6 +27,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
+
+    
     <title>扫码功能</title>
     <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
     <style>
@@ -43,14 +45,20 @@
         font-size: 18px;
         color: green;
       }
+      #scannerWindow {
+        display: none;
+      }
     </style>
   </head>
   <body>
     <h2>扫码功能</h2>
-    <button id="startButton">启动摄像头</button>
-    <video id="videoElement" autoplay></video>
-    <canvas id="canvas"></canvas>
-    <div id="result"></div>
+    <button id="startButton">启动扫码窗口</button>
+    <div id="scannerWindow">
+      <video id="videoElement" autoplay></video>
+      <canvas id="canvas"></canvas>
+      <div id="result"></div>
+    </div>
+    <button id="reopenButton" style="display: none;">重新启动扫码窗口</button>
   
     <script>
       const videoElement = document.getElementById('videoElement');
@@ -58,6 +66,8 @@
       const canvasContext = canvas.getContext('2d');
       const resultDiv = document.getElementById('result');
       const startButton = document.getElementById('startButton');
+      const reopenButton = document.getElementById('reopenButton');
+      const scannerWindow = document.getElementById('scannerWindow');
       let stream;
   
       // 获取摄像头权限并启动视频流
@@ -67,6 +77,7 @@
             video: { facingMode: "environment" }  // 使用后置摄像头
           });
           videoElement.srcObject = stream;
+          scannerWindow.style.display = 'block'; // 显示扫码窗口
           startScanning();  // 启动扫码过程
         } catch (error) {
           console.error('获取摄像头失败:', error);
@@ -95,7 +106,8 @@
             // 扫描成功，显示结果并停止摄像头
             resultDiv.innerText = `扫码结果: ${qrCode.data}`;
             stopCamera(); // 停止摄像头
-            videoElement.style.display = "none"; // 隐藏视频元素
+            scannerWindow.style.display = 'none'; // 隐藏扫码窗口
+            reopenButton.style.display = 'block'; // 显示重新启动按钮
             return; // 一旦扫描成功，停止后续扫描
           }
         }
@@ -110,6 +122,13 @@
   
       // 绑定按钮点击事件，触发摄像头启动
       startButton.addEventListener('click', startCamera);
+  
+      // 重新启动扫码窗口
+      reopenButton.addEventListener('click', function() {
+        reopenButton.style.display = 'none'; // 隐藏重新启动按钮
+        resultDiv.innerText = ''; // 清空之前的扫码结果
+        startCamera(); // 重新启动摄像头
+      });
     </script>
   </body>
   </html>
