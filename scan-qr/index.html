@@ -5,25 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
   <link rel="icon" href="data:image/svg+xml,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <rect width='100' height='100' fill='%232c3e50'/>
-            <text x='50%' y='50%' font-size='60' 
-            text-anchor='middle' dominant-baseline='middle' 
-            fill='%23ffffff' font-family='sans-serif'>
-            S1
-            </text>
-        </svg>">
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>
+        S1
+        </text></svg>">
   <link rel="shortcut icon" href="data:image/svg+xml,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
-            <rect width='100' height='100' fill='%232c3e50'/>
-            <text x='50%' y='50%' font-size='60' 
-            text-anchor='middle' dominant-baseline='middle' 
-            fill='%23ffffff' font-family='sans-serif'>
-            S1
-            </text>
-        </svg>">
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>
+        S1
+        </text></svg>">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -101,7 +90,7 @@
     }
 
     .top-section {
-      flex: 2;
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -113,7 +102,7 @@
       flex: 1;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
     }
 
     /* 隐藏 video */
@@ -126,7 +115,7 @@
 <body>
   <div class="container">
     <div class="top-section">
-      <div id="result">扫描结果将在这里显示</div>
+      <div id="result" onclick="handleScanClick()">扫描结果将在这里显示</div>
       <video id="video" class="hidden"></video>
     </div>
     <div class="bottom-section">
@@ -167,8 +156,8 @@
 
       codeReader.decodeFromVideoDevice(undefined, videoElement, (result, err) => {
         if (result) {
-          resultDiv.innerText = `扫码成功: ${result.text}`;
-          alert("扫码成功！");
+          resultDiv.innerText = `${result.text}`;
+          //alert("扫码成功！");
           stopCamera(); // 停止摄像头
         }
       });
@@ -183,6 +172,21 @@
       }
       if (codeReader) {
         codeReader.reset(); // 关闭解码器，防止重复触发
+      }
+    }
+    function handleScanClick() {
+      const scanResult = document.getElementById("result").innerText;
+
+      if (scanResult.startsWith("http://") || scanResult.startsWith("https://")) {
+        // 🔹 如果是网页链接，跳转到该网页
+        window.open(scanResult, "_blank");
+      } else {
+        // 🔹 如果是普通文本，复制到剪贴板
+        navigator.clipboard.writeText(scanResult).then(() => {
+          alert("已复制到剪贴板：" + scanResult);
+        }).catch(err => {
+          console.error("复制失败", err);
+        });
       }
     }
 

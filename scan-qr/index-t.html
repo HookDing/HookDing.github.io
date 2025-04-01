@@ -107,7 +107,7 @@
     <div id="scanner-container">
         <video id="video" autoplay playsinline></video>
     </div>
-    <div id="result"></div>
+    <div id="result" onclick="handleScanClick()"></div>
     <div class="btn-group">
         <button id="start-btn" class="btn btn-start" onclick="startCamera()">开始扫描</button>
         <button id="stop-btn" class="btn btn-stop" onclick="stopCamera()" disabled>暂停扫描</button>
@@ -153,7 +153,7 @@
 
             codeReader.decodeFromVideoDevice(undefined, video, (result, err) => {
                 if (result) {
-                    resultDiv.innerText = `扫描成功: ${result.text}`;
+                    resultDiv.innerText = `${result.text}`;
                     resultDiv.style.display = "block";
 
                     //setTimeout(() => video.pause(), 0); // 让画面定格
@@ -184,6 +184,21 @@
             // 停止 ZXing 解码
             if (codeReader) {
                 codeReader.reset();
+            }
+        }
+        function handleScanClick() {
+            const scanResult = document.getElementById("result").innerText;
+
+            if (scanResult.startsWith("http://") || scanResult.startsWith("https://")) {
+                // 🔹 如果是网页链接，跳转到该网页
+                window.open(scanResult, "_blank");
+            } else {
+                // 🔹 如果是普通文本，复制到剪贴板
+                navigator.clipboard.writeText(scanResult).then(() => {
+                    alert("已复制到剪贴板：" + scanResult);
+                }).catch(err => {
+                    console.error("复制失败", err);
+                });
             }
         }
 
