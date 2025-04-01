@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
-    
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>H</text></svg>">
-    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>H</text></svg>">
-    
+
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>H</text></svg>">
+    <link rel="shortcut icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>H</text></svg>">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -20,7 +22,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -32,7 +34,7 @@
             color: #333;
             line-height: 1.6;
         }
-        
+
         .container {
             width: 90%;
             max-width: 800px;
@@ -42,14 +44,14 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
+
         h1 {
             margin-bottom: 2rem;
             color: #2c3e50;
             position: relative;
             padding-bottom: 0.5rem;
         }
-        
+
         h1::after {
             content: '';
             position: absolute;
@@ -61,7 +63,7 @@
             background: linear-gradient(to right, #3498db, #9b59b6);
             border-radius: 3px;
         }
-        
+
         .nav-list {
             list-style: none;
             display: grid;
@@ -69,15 +71,15 @@
             gap: 1.5rem;
             margin-top: 2rem;
         }
-        
+
         .nav-item {
             transition: transform 0.3s ease;
         }
-        
+
         .nav-item:hover {
             transform: translateY(-5px);
         }
-        
+
         .nav-link {
             display: block;
             padding: 1.2rem;
@@ -90,34 +92,35 @@
             transition: all 0.3s ease;
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        
+
         .nav-link:hover {
             background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%);
             color: white;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .description {
             margin: 1.5rem 0;
             color: #7f8c8d;
         }
-        
+
         @media (max-width: 600px) {
             .container {
                 padding: 1.5rem;
             }
-            
+
             .nav-list {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>导 航</h1>
         <p class="description">请选择您要访问的页面</p>
-        
+
         <ul class="nav-list">
             <li class="nav-item">
                 <a href="canvas-line/index.html" class="nav-link">Canvas-Line</a>
@@ -137,4 +140,5 @@
         </ul>
     </div>
 </body>
+
 </html>
