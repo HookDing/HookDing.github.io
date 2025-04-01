@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-    <meta charset="UTF-8">
-    <title>我的所有物品</title>
-    <script src="canvas-mime-browser.js?v=20250326172033"></script>
-    <script src="./js-yaml.min.js"></script>
-    <script>
-        const THINGS_YAML = `
+  <meta charset="UTF-8">
+
+
+  <link rel="icon" href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>
+            M
+          </text></svg>">
+  <link rel="shortcut icon" href="data:image/svg+xml,
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>
+            M
+          </text></svg>">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
+  <title>我的所有物品</title>
+  <script src="canvas-mime-browser.js?v=20250326172033"></script>
+  <script src="./js-yaml.min.js"></script>
+  <script>
+    const THINGS_YAML = `
 - name: 证件
   children:
     - name: 身份证
@@ -167,63 +182,64 @@
       price: 40
 
 `
-        let thingArray = jsyaml.load(THINGS_YAML)
-        thingArray.forEach(category => {
-            category.price = category.children.reduce((sum, item) => sum + (item.price || 0), 0)
-        })
-        console.log(thingArray)
-        let canvasMine = new CanvasMine(
-            'Mine',
-            thingArray,
-            4,
-            700,
-            false,  // show index
-            false,   // show canvas info
-            true    // show price
-        )
+    let thingArray = jsyaml.load(THINGS_YAML)
+    thingArray.forEach(category => {
+      category.price = category.children.reduce((sum, item) => sum + (item.price || 0), 0)
+    })
+    console.log(thingArray)
+    let canvasMine = new CanvasMine(
+      'Mine',
+      thingArray,
+      4,
+      700,
+      false,  // show index
+      false,   // show canvas info
+      true    // show price
+    )
 
-        /****************************
-         *  获取地址栏get数据
-         *  - 有值的时候返回一个包含所有参数的对象
-         *  - 无值的时候，返回 `false`
-         ****************************/
-        function getSearchData() {
-            let searchString = location.search;
-            if (searchString) {
-                let obj = {};
-                searchString = searchString.substring(1, searchString.length);
-                let tempArray = searchString.split('&');
-                tempArray.forEach(item => {
-                    obj[item.split('=')[0]] = decodeURIComponent(item.split('=')[1]);
-                });
-                return obj;
-            } else {
-                return false;
-            }
-        }
-    </script>
+    /****************************
+     *  获取地址栏get数据
+     *  - 有值的时候返回一个包含所有参数的对象
+     *  - 无值的时候，返回 `false`
+     ****************************/
+    function getSearchData() {
+      let searchString = location.search;
+      if (searchString) {
+        let obj = {};
+        searchString = searchString.substring(1, searchString.length);
+        let tempArray = searchString.split('&');
+        tempArray.forEach(item => {
+          obj[item.split('=')[0]] = decodeURIComponent(item.split('=')[1]);
+        });
+        return obj;
+      } else {
+        return false;
+      }
+    }
+  </script>
 </head>
 
 <body>
-<!--<button onclick="canvasMine.animationStop()">Stop</button>-->
-<!--<button onclick="canvasMine.animationStart()">Start</button>-->
-<a class="github-btn" href="https://github.com/KyleBing/canvas-mine">github</a>
+  <!--<button onclick="canvasMine.animationStop()">Stop</button>-->
+  <!--<button onclick="canvasMine.animationStart()">Start</button>-->
+  <a class="github-btn" href="https://github.com/KyleBing/canvas-mine">github</a>
 </body>
 
 <style>
-    .github-btn {
-        position: fixed;
-        right: 10px;
-        bottom: 10px;
-        font-size: 14px;
-        text-align: center;
-        padding: 5px 10px;
-        color: gray;
-        cursor: pointer;
-    }
+  .github-btn {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+    padding: 5px 10px;
+    color: gray;
+    cursor: pointer;
+  }
 
-    .github-btn:hover {
-        color: magenta;
-    }
+  .github-btn:hover {
+    color: magenta;
+  }
 </style>
+
 </html>
