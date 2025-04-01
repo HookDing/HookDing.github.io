@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%232c3e50'/><text x='50%' y='50%' font-size='60' text-anchor='middle' dominant-baseline='middle' fill='%23ffffff' font-family='sans-serif'>H</text></svg>">
     <link rel="shortcut icon"
@@ -15,76 +14,87 @@
     <meta http-equiv="Expires" content="0">
 
     <title>扫码功能</title>
-      <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
-      <style>
-        #videoElement {
-          width: 100%;
-          height: auto;
-          border: 1px solid black;
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <style>
+      #videoElement {
+        width: 100%;
+        height: auto;
+        border: 1px solid black;
+      }
+      #canvas {
+        display: none;
+      }
+      #result {
+        margin-top: 10px;
+        font-size: 18px;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>扫码功能</h2>
+    <button id="startButton">启动摄像头</button>
+    <video id="videoElement" autoplay></video>
+    <canvas id="canvas"></canvas>
+    <div id="result"></div>
+  
+    <script>
+      const videoElement = document.getElementById('videoElement');
+      const canvas = document.getElementById('canvas');
+      const canvasContext = canvas.getContext('2d');
+      const resultDiv = document.getElementById('result');
+      const startButton = document.getElementById('startButton');
+      let stream;
+  
+      // 获取摄像头权限并启动视频流
+      async function startCamera() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" }  // 使用后置摄像头
+          });
+          videoElement.srcObject = stream;
+          startScanning();  // 启动扫码过程
+        } catch (error) {
+          console.error('获取摄像头失败:', error);
         }
-        #canvas {
-          display: none;
+      }
+  
+      // 停止摄像头
+      function stopCamera() {
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach(track => track.stop());
         }
-        #result {
-          margin-top: 10px;
-          font-size: 18px;
-          color: green;
-        }
-      </style>
-    </head>
-    <body>
-      <h2>扫码功能</h2>
-      <button id="startButton">启动摄像头</button>
-      <video id="videoElement" autoplay></video>
-      <canvas id="canvas"></canvas>
-      <div id="result"></div>
-    
-      <script>
-        const videoElement = document.getElementById('videoElement');
-        const canvas = document.getElementById('canvas');
-        const canvasContext = canvas.getContext('2d');
-        const resultDiv = document.getElementById('result');
-        const startButton = document.getElementById('startButton');
-    
-        // 获取摄像头权限并启动视频流
-        async function startCamera() {
-          try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-              video: { facingMode: "environment" }  // 使用后置摄像头
-            });
-            videoElement.srcObject = stream;
-            startScanning();  // 启动扫码过程
-          } catch (error) {
-            console.error('获取摄像头失败:', error);
+      }
+  
+      // 扫描视频流中的二维码或一维码并显示实时预览
+      function scanQRCode() {
+        if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
+          canvas.height = videoElement.videoHeight;
+          canvas.width = videoElement.videoWidth;
+          canvasContext.drawImage(videoElement, 0, 0, canvas.width, canvas.height); // 绘制视频帧到 canvas
+  
+          const imageData = canvasContext.getImageData(0, 0, canvas.width, canvas.height);
+          const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
+  
+          if (qrCode) {
+            // 扫描成功，显示结果并停止摄像头
+            resultDiv.innerText = `扫码结果: ${qrCode.data}`;
+            stopCamera(); // 停止摄像头
+            return; // 一旦扫描成功，停止后续扫描
           }
         }
-    
-        // 扫描视频流中的二维码并显示实时预览
-        function scanQRCode() {
-          if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
-            canvas.height = videoElement.videoHeight;
-            canvas.width = videoElement.videoWidth;
-            canvasContext.drawImage(videoElement, 0, 0, canvas.width, canvas.height); // 绘制视频帧到 canvas
-    
-            const imageData = canvasContext.getImageData(0, 0, canvas.width, canvas.height);
-            const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
-    
-            if (qrCode) {
-              resultDiv.innerText = `扫码结果: ${qrCode.data}`;
-            }
-          }
-    
-          requestAnimationFrame(scanQRCode); // 继续下一帧的扫描
-        }
-    
-        // 启动扫码过程
-        function startScanning() {
-          scanQRCode();
-        }
-    
-        // 绑定按钮点击事件，触发摄像头启动
-        startButton.addEventListener('click', startCamera);
-      </script>
-    </body>
-    </html>
-    
+  
+        requestAnimationFrame(scanQRCode); // 继续下一帧的扫描
+      }
+  
+      // 启动扫码过程
+      function startScanning() {
+        scanQRCode();
+      }
+  
+      // 绑定按钮点击事件，触发摄像头启动
+      startButton.addEventListener('click', startCamera);
+    </script>
+  </body>
+  </html>
