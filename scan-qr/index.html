@@ -106,7 +106,7 @@
             setTimeout(() => {
               videoElement.style.display = 'block';  // 显示视频元素
               videoElement.srcObject = null;         // 清除视频源
-              startCamera();                         // 重新启动摄像头
+              //startCamera();                         // 重新启动摄像头
             }, 1000); // 延时 1 秒后重启摄像头，避免 UI 更新滞后
             return; // 一旦扫描成功，停止后续扫描
           }
