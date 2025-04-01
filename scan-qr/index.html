@@ -74,12 +74,12 @@
         }
       }
   
-      // 停止摄像头
+      // 停止摄像头并挤退系统窗口
       function stopCamera() {
         if (stream) {
           const tracks = stream.getTracks();
           tracks.forEach(track => track.stop()); // 停止所有摄像头的轨道
-          videoElement.srcObject = null;  // 断开视频流，关闭系统窗口
+          videoElement.srcObject = null;  // 断开视频流
         }
       }
   
@@ -96,14 +96,18 @@
           if (qrCode) {
             // 扫描成功，显示结果并停止摄像头
             resultDiv.innerText = `扫码结果: ${qrCode.data}`;
+            
+            // 强制 "挤退" 窗口，触发摄像头停止
+            alert("扫码成功！");
             stopCamera(); // 停止摄像头
             videoElement.style.display = 'none'; // 隐藏视频元素，避免黑屏
-            // 切换到其他界面或操作，避免继续显示摄像头窗口
-            // 假设这里我们跳转到一个成功页面或者刷新UI
+  
+            // 清除预览内容，确保可以重新启动摄像头
             setTimeout(() => {
-              alert('扫码成功！');
-              // 可以跳转到其他页面或更新界面
-            }, 500);
+              videoElement.style.display = 'block';  // 显示视频元素
+              videoElement.srcObject = null;         // 清除视频源
+              startCamera();                         // 重新启动摄像头
+            }, 1000); // 延时 1 秒后重启摄像头，避免 UI 更新滞后
             return; // 一旦扫描成功，停止后续扫描
           }
         }
