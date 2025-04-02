@@ -58,7 +58,7 @@ class CanvasMyWholeLife {
 
         this.LIFE_PHASE = LIFE_PHASE
 
-        this.dateBirthString = '1991-03-09 05:46:00'
+        this.dateBirthString = '2002-03-13 12:00:00'
         this.wholeLifeAge = 75
 
 
@@ -90,7 +90,7 @@ class CanvasMyWholeLife {
     applyLifeConfig(dateBirthString, wholeLifeAge, newLifePhase, newLifePoint) {
         this.LIFE_PHASE = newLifePhase.length > 0 ? newLifePhase : LIFE_PHASE
         this.LIFE_POINT = newLifePoint.length > 0 ? newLifePoint : LIFE_POINT
-        dateBirthString ? this.dateBirthString = dateBirthString : '1991-03-09 05:46:00';
+        dateBirthString ? this.dateBirthString = dateBirthString : '2002-03-13 12:00:00';
         wholeLifeAge ? this.wholeLifeAge = wholeLifeAge : 75;
         this.processDateArrayData()
         this.draw()
