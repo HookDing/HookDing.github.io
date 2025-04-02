@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的整个人生</title>
+    <script src="moment.min.js"></script>
+    <script src="canvas-my-whole-life.js"></script>
+    <script>
+        let dataPreset = getSearchData().v
+        let life = new CanvasMyWholeLife(
+            '我的整个人生',
+            false,
+            true,
+            Number(dataPreset)
+        )
+
+        /****************************
+         *  获取地址栏get数据
+         *  - 有值的时候返回一个包含所有参数的对象
+         *  - 无值的时候，返回 `false`
+         ****************************/
+        function getSearchData(){
+            let searchString = location.search;
+            if (searchString){
+                let obj = {};
+                searchString = searchString.substring(1, searchString.length);
+                let tempArray = searchString.split('&');
+                tempArray.forEach(item => {
+                    obj[item.split('=')[0]] = decodeURIComponent(item.split('=')[1]);
+                });
+                return obj;
+            } else {
+                return false;
+            }
+        }
+    </script>
+</head>
+
+<body>
+<a class="github-btn" href="https://github.com/KyleBing/canvas-my-hole-life">github</a>
+<div class="operation hidden">
+    <input class="date-birth" type="text" placeholder="出生日期：格式 2025-04-02" value="2002-03-13">
+    <input class="date-die" type="text" placeholder="你打算活几年：数字" value="75">
+    <textarea class="date-point-array" rows="10" placeholder="重要时间点">
+[
+    { "name": "她", "dayIndex": "", "date": "2022-02-22", "dayRange": [], "ageRange": [], "color": "black", "text": "" },
+    { "name": "75岁", "dayIndex": "", "date": "2079-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" },
+    { "name": "70岁", "dayIndex": "", "date": "2074-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" },
+    { "name": "60岁", "dayIndex": "", "date": "2064-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" },
+    { "name": "50岁", "dayIndex": "", "date": "2052-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" },
+    { "name": "40岁", "dayIndex": "", "date": "2042-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" },
+    { "name": "30岁", "dayIndex": "", "date": "2032-03-13", "dayRange": [], "ageRange": [], "color": "gray", "text": "" }
+]
+    </textarea>
+    <textarea class="date-phase-array" rows="10" placeholder="阶段数组">
+[
+    { "name": "小学", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [7, 13], "color": "#009159", "text": "小" },
+    { "name": "中学", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [13, 15], "color": "orange", "text": "中" },
+    { "name": "高中", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [15, 18], "color": "red", "text": "高" },
+    { "name": "大学", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [18, 21], "color": "blue", "text": "大" },
+    { "name": "工作", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [20, 23], "color": "DodgerBlue", "text": "工" },
+    { "name": "退休", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [65, 72], "color": "blue", "text": "休" },
+    { "name": "卧床", "dayIndex": "", "date": "", "dayRange": [], "ageRange": [72, 75], "color": "gray", "text": "床" }
+]
+    </textarea>
+    <div class="tip">
+        <p>根据输入框中的 json 内容修改成你自己的数据，然后点击确定即可</p>
+    </div>
+    <div class="button-group">
+        <button onclick="life.toggleDatePoint()">重要时间点显示</button>
+        <button onclick="toggleTextareaDisplay()">配置框</button>
+        <button onclick="applyNewConfig()">确定</button>
+    </div>
+</div>
+</body>
+
+<script>
+    function toggleTextareaDisplay(){
+        document.querySelector('.operation').classList.toggle('hidden')
+    }
+    function applyNewConfig(){
+        let newLifePhase = JSON.parse(document.querySelector('.date-phase-array').value || '[]')
+        let newLifePoint = JSON.parse(document.querySelector('.date-point-array').value || '[]')
+        let dateBirthString = document.querySelector('.date-birth').value.trim()
+        let wholeLifeAge = document.querySelector('.date-die').value.trim()
+        life.applyLifeConfig(dateBirthString, Number(wholeLifeAge), newLifePhase, newLifePoint)
+    }
+</script>
+
+<style>
+    .github-btn{
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        font-size: 14px;
+        text-align: center;
+        padding: 5px 10px;
+        color: black;
+        cursor: pointer;
+    }
+    .github-btn:hover {
+        color: magenta;
+    }
+    .operation{
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        position: fixed;
+        bottom: 40px;
+        left: 10px;
+    }
+    .operation.hidden textarea, .operation.hidden input, .operation.hidden .tip{
+        display: none;
+    }
+    .operation > * {
+        margin-bottom: 5px;
+    }
+    .tip{
+        font-size: 13px;
+    }
+    button{
+        margin-right: 5px;
+        font-size: 12px;
+    }
+    textarea, input{
+        white-space: nowrap;
+        padding: 5px 8px;
+        line-height: 1.3;
+        width: 800px;
+        font-family: Consolas;
+        font-size: 10px;
+    }
+    textarea:focus, input:focus{
+        box-shadow: none;
+        border-color: mediumseagreen;
+    }
+    .button-group{
+        display: flex;
+        justify-content: flex-start;
+    }
+</style>
+</html>
