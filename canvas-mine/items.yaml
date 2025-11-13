@@ -9,8 +9,8 @@
       price: 1300
 - name: Apple
   children:
-    - name: iPhone 15 Pro 256 (care+ 1y)
-      price: 9998
+    - name: iPhone 15 Pro 256
+      price: 9999
     - name: Macbook Air M2 16+256
       price: 6099
     - name: AirPods Pro 2
@@ -61,7 +61,7 @@
   children:
     - name: 处理器：5600X
       price: 1250
-    - name: 主板：B450M迫击炮
+    - name: 主板：B550M重炮手
       price: 220
     - name: 散热器：利民TS120mini
       price: 238
@@ -83,18 +83,18 @@
       price: 663
     - name: 机箱：华硕AP201冰立方
       price: 398
-    - name: 网卡：AX210
-      price: 180
-    - name: 机箱风扇 * 4
-      price: 180
+    - name: 机箱风扇 * 7
+      price: 350
 - name: 电脑配件-闲置
   children:
     - name: 显卡：GTX1080 公版涡轮
       price: 1300
     - name: 机箱：乔思伯V9
       price: 218
-    - name: 机箱风扇 * 5
-      price: 170
+    - name: 网卡：AX210
+      price: 180
+    - name: 键盘RK 987
+      price: 219
 - name: 电脑外设
   children:
     - name: SANC G52 24寸2K180Hz
@@ -109,10 +109,8 @@
       price: 217
     - name: 罗技鼠标G502无线
       price: 479
-    - name: 键盘RK987
-      price: 219
-    - name: 雷电4数据线1m
-      price: 53
+    - name: 键盘ATK A87 Pro
+      price: 212
     - name: TF卡 16G、8G、512M
     - name: 联想拓展坞
       price: 140
@@ -134,12 +132,18 @@
       price: 349
 - name: 工具
   children:
+    - name: 洛克兄弟头盔
+      price: 110
+    - name: 洛克兄弟手套
+      price: 50
     - name: 喜德胜打气筒
       price: 55
     - name: 内六角扳手
       price: 15
     - name: 螺丝刀套装
       price: 20
+    - name: WD40 400mL * 4
+      price: 230
     - name: 锤子
     - name: 胶带封口机
     - name: 真空包装机
@@ -160,3 +164,5 @@
       price: 327
     - name: 钛合金折叠小刀
       price: 40
+    - name: ZIPPO
+      price: 190
